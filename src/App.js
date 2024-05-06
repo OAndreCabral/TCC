@@ -4,7 +4,7 @@ import Home from './components/layout/Home';
 
 function App() {
   return (
-    <Delivery />
+    <Home />
     );
 }
 

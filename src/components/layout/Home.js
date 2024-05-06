@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import './Home.module.css';
+import Styles from './Home.module.css';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -28,7 +28,7 @@ const Home = () => {
           theme="dark"
           mode="inline"
           defaultSelectedKeys={['1']}
-          className='menu'
+          className={Styles.menu}
           items={[
             {
                 key: '1',
@@ -66,7 +66,7 @@ const Home = () => {
             backgroundColor: 'gray'
           }}
         >
-            <div className='header'>
+            <div className={Styles.header}>
                 <Button
                 type="text"
                 icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
@@ -77,7 +77,7 @@ const Home = () => {
                     height: 64,
                 }}
                 />
-                <div className='headerUser'>
+                <div className={Styles.headerUser}>
                     <UserOutlined />
                     <div>Bátima Fernades</div>
                 </div>
@@ -92,9 +92,9 @@ const Home = () => {
             borderRadius: borderRadiusLG,
           }}
         >
-        <div className="title">Resumo das Póximas Entregas</div>
-        <div className="info">
-            <div className="date">DATA DE ENTREGA
+        <div className={Styles.title}>Resumo das Póximas Entregas</div>
+        <div className={Styles.info}>
+            <div className={Styles.date}>DATA DE ENTREGA
                 <div>01/03/2024</div>
                 <div>01/03/2024</div>
                 <div>01/03/2024</div>
@@ -103,7 +103,7 @@ const Home = () => {
                 <div>27/02/2024</div>
                 <div>27/02/2024</div>
             </div>
-            <div className="time">HORA
+            <div className={Styles.time}>HORA
                 <div>17:45</div>
                 <div>14:30</div>
                 <div>10:00</div>
@@ -112,7 +112,7 @@ const Home = () => {
                 <div>12:00</div>
                 <div>10:00</div>
             </div>
-            <div className="store">LOJA
+            <div className={Styles.store}>LOJA
                 <div>Paraná Familia</div>
                 <div>Lar Paraná</div>
                 <div>Paraná Familia</div>
@@ -121,7 +121,7 @@ const Home = () => {
                 <div>Paraná Familia</div>
                 <div>Paraná Familia</div>
             </div>
-            <div className="status">STATUS
+            <div className={Styles.status}>STATUS
                 <div>Pendente</div>
                 <div>Pendente</div>
                 <div>Pendente</div>
