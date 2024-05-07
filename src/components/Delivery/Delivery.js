@@ -2,18 +2,28 @@ import React, { useState } from 'react';
 import Styles from './Delivery.module.css';
 
 import {
-  MenuFoldOutlined,
-  MenuUnfoldOutlined,
-  HomeOutlined,
-  DesktopOutlined,
-  CalendarOutlined,
-  SettingOutlined,
-  LogoutOutlined,
-  UserOutlined,
-  DownOutlined,
-  
+  MenuFoldOutlined,  MenuUnfoldOutlined,
+  HomeOutlined,  DesktopOutlined,
+  CalendarOutlined, ShoppingCartOutlined,
+  SettingOutlined,  LogoutOutlined,
+  UserOutlined,  DownOutlined,
+  CloudUploadOutlined,  UploadOutlined,
+  CarOutlined,
 } from '@ant-design/icons';
-import { Button, Layout, Menu, theme, Dropdown, Space } from 'antd';
+
+import { 
+  Button, Layout, 
+  Menu, theme, 
+  Dropdown, Space, 
+  Upload, DatePicker,
+  Input,   
+} from 'antd';
+
+const onOk = (value) => {
+  console.log('onOk: ', value);
+};
+
+const { TextArea } = Input;
 
 const items = [
     {
@@ -55,7 +65,7 @@ const Delivery = () => {
               {
                 key: '2',
                 icon: <DesktopOutlined />,
-                label: 'Agendamento de Entrega',
+                label: 'Agendamento',
               },
               {
                 key: '3',
@@ -64,7 +74,7 @@ const Delivery = () => {
               },
               {
                 key: '4',
-                label: 'Configuração da Conta',
+                label: 'Configuração',
                 icon: <SettingOutlined />,
               },
               {
@@ -111,29 +121,66 @@ const Delivery = () => {
         >
         <div className={Styles.title}>Agendamento de Entrega</div>
         <div className={Styles.info}>
-            <div className='infoStore'>
-                <div className={Styles.store}>Selecione a Loja de Destino</div>
-                <div className={Styles.iconStoreSelect}>
-                    <HomeOutlined />
-                    <Dropdown
-                        menu={{
-                            items,
-                        }}
-                        trigger={['click']}
-                        >
-                        <a onClick={(e) => e.preventDefault()}>
-                        <Space>
-                            Selecione o Local
-                            <DownOutlined />
-                        </Space>
-                        </a>
-                    </Dropdown>
-                </div>
+          <div className={Styles.infoDate}>
+            <div>Selecione a Loja de Destino</div>
+            <div className={Styles.iconSelectPlace}>
+              <HomeOutlined />
+              <Dropdown
+                  menu={{
+                    items,
+                  }}
+                  trigger={['click']}
+                  >
+                  <a onClick={(e) => e.preventDefault()}>
+                  <Space>
+                      Selecione o Local
+                      <DownOutlined />
+                  </Space>
+                  </a>
+              </Dropdown>
             </div>
-            <div className={Styles.nf}>Anexar Nota Fiscal</div>
-            <div className={Styles.date}>Selecione a Data e o Horario da Entrega</div>
-            <div className={Styles.product}>Especificação da Mercadoria</div>
-            <div className={Styles.vehicle}>Especificação do Veiculo</div>
+          </div>
+          <div className={Styles.infoDate}>
+            <div>Anexar Nota Fiscal</div>
+            <div className={Styles.iconSelectNF}>
+              <CloudUploadOutlined color='blue'/>
+              <Upload directory>
+                <Button icon={<UploadOutlined />}>Adicionar Arquivo</Button>
+              </Upload>
+            </div>
+          </div>
+          <div className={Styles.infoDate}>
+            <div>Selecione a Data e o Horario da Entrega</div>
+            <div className={Styles.iconSelectDate}>
+              <CalendarOutlined />
+              <Space direction="vertical" size={12}>
+                <DatePicker
+                  showTime
+                  onChange={(value, dateString) => {
+                    console.log('Selected Time: ', value);
+                    console.log('Formatted Selected Time: ', dateString);
+                  }}
+                  onOk={onOk}
+                />
+              </Space>
+            </div>
+          </div>
+          <div className={Styles.infoDate}>
+            <div>Especificação da Mercadoria</div>
+            <div className={Styles.iconSelectInput}>
+              <ShoppingCartOutlined />
+              <TextArea rows={4} cols={48} />
+            </div>
+          </div>
+          <div className={Styles.infoDate}>
+            <div>Especificação do Veiculo</div>
+            <div className={Styles.iconSelectCar}>
+              <CarOutlined />
+              <TextArea rows={1} placeholder="ABC-1234" maxLength={8} />
+              <TextArea rows={1} placeholder="Ex: Peugeot Boxer" maxLength={10} />
+            </div>
+          </div>
+          <Button className={Styles.button}>Enviar</Button>
         </div>
         </Content>
       </Layout>

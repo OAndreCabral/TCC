@@ -38,7 +38,7 @@ const Home = () => {
               {
                 key: '2',
                 icon: <DesktopOutlined />,
-                label: 'Agendamento de Entrega',
+                label: 'Agendamento',
               },
               {
                 key: '3',
@@ -47,7 +47,7 @@ const Home = () => {
               },
               {
                 key: '4',
-                label: 'Configuração da Conta',
+                label: 'Configuração',
                 icon: <SettingOutlined />,
               },
               {

@@ -13,7 +13,7 @@
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
-    gap: 15px;
+    gap: 16px;
 }
 
 .title {
@@ -22,7 +22,7 @@
     font-weight: bold;
     background-color: darkblue;
     color: white;
-    height: 10vw;
+    height: 2vw;
     align-items: center;
     border-radius: 12px;
     border-bottom-left-radius: 0;
@@ -31,15 +31,49 @@
 
 .info {
     display: flex;
-    flex-direction: row;
-    justify-content: space-between;
+    flex-direction: column;
 }
 
-.infoStore, .nf, .date, .product, .vehicle {
+.infoDate {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 40px;
-    margin: 24px 24px 24px 24px;
+    flex-direction: row;
+    justify-content: space-between;
     font-weight: bold;
+    margin: 48px 48px 48px 48px;
+
+}
+
+.iconSelectPlace {
+    display: flex;
+    gap: 256px;
+}
+
+.iconSelectNF {
+    display: flex;
+    gap: 224px;
+    padding-right: 2px;
+}
+
+.iconSelectDate {
+    display: flex;
+    gap: 176px;
+    padding-right: 10px;
+}
+
+.iconSelectInput {
+    display: flex;
+    gap: 44px;
+}
+
+.iconSelectCar {
+    display: flex;
+    gap: 28px;
+}
+
+.button {
+    background-color: darkblue;
+    color: white;
+    border-radius: 12px;
+    border-top-left-radius: 0;
+    border-top-right-radius: 0;
 }
