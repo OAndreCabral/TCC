@@ -1,0 +1,30 @@
+.menu {
+    height: 100vh;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 24px;
+}
+
+.headerUser {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 16px;
+}
+
+.title {
+    display: flex;
+    justify-content: center;
+    font-weight: bold;
+    background-color: darkblue;
+    color: white;
+    height: 2vw;
+    align-items: center;
+    border-radius: 12px;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+}

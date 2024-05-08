@@ -20,7 +20,7 @@ import {
 } from 'antd';
 
 const onOk = (value) => {
-  console.log('onOk: ', value);
+  return value;
 };
 
 const { TextArea } = Input;
@@ -157,8 +157,7 @@ const Delivery = () => {
                 <DatePicker
                   showTime
                   onChange={(value, dateString) => {
-                    console.log('Selected Time: ', value);
-                    console.log('Formatted Selected Time: ', dateString);
+                    return value, dateString;
                   }}
                   onOk={onOk}
                 />
