@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import Styles from './Home.module.css';
+
+import { Link } from 'react-router-dom';
 import {
   MenuFoldOutlined,
   MenuUnfoldOutlined,
@@ -31,30 +33,30 @@ const Home = () => {
           className={Styles.menu}
           items={[
             {
-                key: '1',
-                icon: <HomeOutlined />,
-                label: 'Inicio',
-              },
-              {
-                key: '2',
-                icon: <DesktopOutlined />,
-                label: 'Agendamento',
-              },
-              {
-                key: '3',
-                icon: <CalendarOutlined />,
-                label: 'Histórico de Entrega',
-              },
-              {
-                key: '4',
-                label: 'Configuração',
-                icon: <SettingOutlined />,
-              },
-              {
-                key: '5',
-                label: 'Sair',
-                icon: <LogoutOutlined />,
-              },
+              key: '1',
+              icon: <HomeOutlined />,
+              label: <Link to="/">Inicio</Link>,
+            },
+            {
+              key: '2',
+              icon: <DesktopOutlined />,
+              label: <Link to="/agendamento">Agendamento</Link>,
+            },
+            {
+              key: '3',
+              icon: <CalendarOutlined />,
+              label: <Link to='/historico'>Histórico de Entrega</Link>,
+            },
+            {
+              key: '4',
+              icon: <SettingOutlined />,
+              label: <Link to='/configuracao'>Configuração</Link>,
+            },
+            {
+              key: '5',
+              icon: <LogoutOutlined />,
+              label: <Link to='/sair'>Sair</Link>,
+            },
           ]}
         />
       </Sider>
