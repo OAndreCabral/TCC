@@ -1,8 +1,8 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Home from './pages/Home/Home';
-import Delivery from './pages/Delivery/Delivery';
-import History from './pages/History/History';
+import Home from './pages/Dashboard/Dashboard';
+import Delivery from './pages/Encomendas/Encomendas';
+import History from './pages/Fornecedores/Fornecedores';
 import Login from './pages/Login/Login';
 
 function App() {
@@ -10,11 +10,11 @@ function App() {
     <Router>
       <Routes>
         <Route path='/' element={<Login />}/>
-        <Route path='/home' element={<Home />}/>
-        <Route path='/agendamento' element={<Delivery />}/>
-        <Route path='/historico' element={<History />}/>
-        {/* <Route path='/configuracao' element={<Configuracao />}/>
-        <Route path='/sair' element={<Sair />}/> */}
+        <Route path='/dashboard' element={<Home />}/>
+        <Route path='/encomendas' element={<Delivery />}/>
+        <Route path='/fornecedores' element={<History />}/>
+        {/* <Route path='/agenda' element={<Configuracao />}/>
+        <Route path='/filiais' element={<Sair />}/> */}
       </Routes>
     </Router>
   );

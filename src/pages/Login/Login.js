@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import Styles from './Login.module.css';
 import logo from '../../assets/logo.svg'
+import { Link } from 'react-router-dom';
 
 const onFinish = (values) => {
   console.log('Success:', values);
@@ -29,14 +30,14 @@ const Login = () => {
                 <div>
 
                 <Form.Item
-                label="Usuario"
-                name="usuario"
-                rules={[
-                    {
-                    required: true,
-                    message: 'Insira o nome de usuario',
-                    },
-                ]}
+                    label="Email"
+                    name="usuario"
+                    rules={[
+                        {
+                        required: true,
+                        message: 'Insira o nome de usuario',
+                        },
+                    ]}
                 >
                 <Input />
                 </Form.Item>
@@ -71,9 +72,14 @@ const Login = () => {
                         span: 16,
                     }}
                 >
-                    <Button type="primary" htmlType="submit">
-                        Entrar
-                    </Button>
+                    <Link to="/home">
+                        <Button 
+                            type="primary" 
+                            htmlType="submit"
+                            >
+                            Entrar
+                        </Button>
+                    </Link>
                 </Form.Item>
                 </div>
             </div>
