@@ -16,15 +16,16 @@
     gap: 16px;
 }
 
-.title {
+.contentTitle {
     display: flex;
-    justify-content: center;
-    font-weight: bold;
-    background-color: darkblue;
-    color: white;
-    height: 2vw;
-    align-items: center;
-    border-radius: 12px;
-    border-bottom-left-radius: 0;
-    border-bottom-right-radius: 0;
+    justify-content: flex-start;
+}
+
+.contentButtons {
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
+
+.contentTopButtons {
+    padding-bottom: 25px;
 }

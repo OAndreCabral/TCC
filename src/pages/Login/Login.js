@@ -72,7 +72,7 @@ const Login = () => {
                         span: 16,
                     }}
                 >
-                    <Link to="/home">
+                    <Link to="/dashboard">
                         <Button 
                             type="primary" 
                             htmlType="submit"

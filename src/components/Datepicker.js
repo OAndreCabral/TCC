@@ -1,8 +1,12 @@
 import React from 'react';
-import { DatePicker, Space } from 'antd';
+import { ConfigProvider, DatePicker } from 'antd';
+import ptBR from 'antd/lib/locale/pt_BR';
+
 const { RangePicker } = DatePicker;
 
 const Datepicker = () => (
-    <RangePicker />
+    <ConfigProvider locale={ptBR}>
+        <RangePicker />
+    </ConfigProvider>
 );
 export default Datepicker;

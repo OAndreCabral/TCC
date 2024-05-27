@@ -1,6 +1,6 @@
 import React from 'react';
 import { DownOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Dropdown, message, Space } from 'antd';
+import { Button, Dropdown, message, Space, Menu } from 'antd';
 
 const handleMenuClick = (e) => {
   message.info('Click on menu item.');
@@ -35,12 +35,12 @@ const menuProps = {
   items,
   onClick: handleMenuClick,
 };
-const DropdownButton = () => (
+const DropdownButton = ({ placeholder }) => (
   <Space wrap>
     <Dropdown menu={menuProps}>
       <Button>
         <Space>
-          Buscar Filial
+          { placeholder }
           <DownOutlined />
         </Space>
       </Button>
