@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Styles from './Nfe.module.css';
+import Styles from './EditarEncomenda.module.css';
 
 import { Link } from 'react-router-dom';
 import {
@@ -13,13 +13,14 @@ import {
   UserOutlined,
   DownloadOutlined,
 } from '@ant-design/icons';
-import { Button, Layout, Menu, theme, Row, Col, Card, DatePicker } from 'antd';
-import BotaoInput from '../../components/BotaoInput';
+import { Button, Layout, Menu, theme, Row, Col } from 'antd';
+import BotaoInput from '../../../../components/BotaoInput';
 import TextArea from 'antd/es/input/TextArea';
+import Datepicker from '../../../../components/Datepicker';
 
 const { Header, Sider, Content } = Layout;
 
-const Nfe = () => {
+const EditEncomenda = () => {
     const [collapsed, setCollapsed] = useState(false);
     const [size, setSize] = useState('large');
     const {
@@ -99,7 +100,7 @@ const Nfe = () => {
           }}
         >
             <div className={Styles.contentTitle}>
-                <h1>Encomenda</h1>
+                <h1>Editar Encomenda</h1>
             </div>
             <div className={Styles.contentButtons}>
                 <Row gutter={[26, 16]} className={Styles.button}>
@@ -110,7 +111,7 @@ const Nfe = () => {
                         <BotaoInput placeholder={"Situação"}/>
                     </Col>
                     <Col xs={24} sm={18} md={16} lg={3}>
-                        <DatePicker disabled />
+                        <Datepicker disabled />
                     </Col>
                     <Col xs={2} sm={12} md={9} lg={6}>
                         <Button type="primary" icon={<DownloadOutlined />} size={size}>
@@ -146,10 +147,18 @@ const Nfe = () => {
                     <BotaoInput placeholder={"Telefone"}/>
                 </Col>
             </Row>
+            <Row gutter={[16, 16]} className={Styles.contentBottomButton}>
+            <Col>
+              <Button>Cancelar</Button>
+            </Col>
+            <Col>
+              <Button type='primary'>Salvar</Button>
+            </Col>
+          </Row>
         </Content>
       </Layout>
     </Layout>
   );
 };
 
-export default Nfe;
+export default EditEncomenda;

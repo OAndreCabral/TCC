@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import Styles from './Encomendas.module.css';
+import Styles from './Fornecedores.module.css';
 
 import { Link } from 'react-router-dom';
 import {
@@ -13,10 +13,9 @@ import {
   MenuFoldOutlined,SignalFilled,
   UserOutlined,PlusOutlined
 } from '@ant-design/icons';
-import { Button, Layout, Menu, theme, Table, Row, Col, Space, Select } from 'antd';
-import BotaoInput from '../../components/BotaoInput';
-import BotaoBuscar from '../../components/BotaoBuscar';
-import Datepicker from '../../components/Datepicker';
+import { Button, Layout, Menu, theme, Table, Row, Col, Space } from 'antd';
+import BotaoInput from '../../../../components/BotaoInput';
+import BotaoBuscar from '../../../../components/BotaoBuscar';
 
 const { Header, Sider, Content } = Layout;
 
@@ -35,7 +34,7 @@ const History = () => {
       },
       {
         key: '2',
-        nomeFantasia: 'Dragão do Sol Nascente',
+        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
         CNPJ: '12.345.678/0001-95',
         status: 'Ativo',
       },
@@ -53,7 +52,7 @@ const History = () => {
       },
       {
         key: '5',
-        nomeFantasia: 'Dragão Encantadas do Sol Nascente',
+        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
         CNPJ: '12.345.678/0001-95',
         status: 'Inativo',
       },
@@ -83,7 +82,7 @@ const History = () => {
       },
       {
         key: '10',
-        nomeFantasia: 'Klagão Celestial das Terras Encantadas do Sol Nascente',
+        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
         CNPJ: '12.345.678/0001-95',
         status: 'Ativo',
       },
@@ -101,7 +100,7 @@ const History = () => {
       },
       {
         key: '13',
-        nomeFantasia: 'Dragão Nascente',
+        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
         CNPJ: '12.345.678/0001-95',
         status: 'Ativo',
       },
@@ -113,7 +112,7 @@ const History = () => {
       },
       {
         key: '15',
-        nomeFantasia: 'Yeagão Celestial Nascente',
+        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
         CNPJ: '12.345.678/0001-95',
         status: 'Inativo',
       },
@@ -131,13 +130,13 @@ const History = () => {
       },
       {
         key: '18',
-        nomeFantasia: 'Heigão Celestial Nascente',
+        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
         CNPJ: '12.345.678/0001-95',
         status: 'Ativo',
       },
       {
         key: '19',
-        nomeFantasia: 'Zragão Celestial das Terras Encantadas do Sol Nascente',
+        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
         CNPJ: '12.345.678/0001-95',
         status: 'Inativo',
       }
@@ -159,7 +158,6 @@ const History = () => {
       {
         title: 'CNPJ',
         dataIndex: 'CNPJ',
-        defaultSortOrder: 'descend',
         sorter: (a, b) => a.CNPJ.localeCompare(b.CNPJ),
       },
       {
@@ -197,7 +195,7 @@ const History = () => {
         <Menu
           theme="dark"
           mode="inline"
-          defaultSelectedKeys={['2']}
+          defaultSelectedKeys={['3']}
           className={Styles.menu}
           items={[
             {
@@ -263,22 +261,16 @@ const History = () => {
           }}
         >
         <div className={Styles.contentTitle}>
-          <h1>Encomendas</h1>
+          <h1>Fornecedores</h1>
         </div>
         <div className={Styles.contentButtons}>
           <Row gutter={[16, 16]}>
             <Col xs={28} sm={28} md={28} lg={28}>
-              <BotaoInput placeholder={"Fornecedor"}/>
+              <BotaoInput placeholder={"Nome Fantasia"}/>
             </Col>
             <Col xs={28} sm={28} md={28} lg={28}>
-              <Select placeholder="Busque pela filial"/>
-            </Col>
-            <Col xs={28} sm={28} md={28} lg={28}>
-              <BotaoInput placeholder={"Busque pela situação"}/>
-            </Col>
-            <Col xs={28} sm={28} md={28} lg={28}>
-              <Datepicker />
-            </Col>
+              <BotaoInput placeholder={"CNPJ"}/>
+              </Col>
             <Col xs={28} sm={28} md={28} lg={28}>
               <BotaoBuscar />
             </Col>

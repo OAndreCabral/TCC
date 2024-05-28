@@ -1,13 +1,15 @@
 import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
 import './App.css';
-import Home from './pages/Dashboard/Dashboard';
-import Encomendas from './pages/Encomendas/Encomendas';
-import History from './pages/Fornecedores/Fornecedores';
-import Login from './pages/Login/Login';
-import EditarFornecedores from './pages/EditarFornecedores/EditarFornecedores';
-import CadastrarFornecedores from './pages/CadastrarFornecedores/CadastrarFornecedores';
-import Nfe from './pages/Nfe/Nfe';
-
+import Home from '../src/domain/mercado/pages/Dashboard/Dashboard';
+import Encomendas from '../src/domain/mercado/pages/Encomendas/Encomendas';
+import History from '../src/domain/mercado/pages/Fornecedores/Fornecedores';
+import Login from '../src/domain/mercado/pages/Login/Login';
+import EditarFornecedores from '../src/domain/mercado/pages/EditarFornecedores/EditarFornecedores';
+import CadastrarFornecedores from '../src/domain/mercado/pages/CadastrarFornecedores/CadastrarFornecedores';
+import Nfe from '../src/domain/mercado/pages/Nfe/Nfe';
+import EditarEncomenda from '../src/domain/mercado/pages/EditarEncomenda/EditarEncomenda';
+import Agenda from '../src/domain/mercado/pages/Agenda/Agenda';
+import Filiais from '../src/domain/mercado/pages/Filiais/Filiais';
 
 function App() {
   return (
@@ -20,8 +22,9 @@ function App() {
         <Route path='/edit-fornecedores' element={<EditarFornecedores />}/>
         <Route path='/cadastrar-fornecedores' element={<CadastrarFornecedores />}/>
         <Route path='/nfe' element={<Nfe />}/>
-        {/* <Route path='/agenda' element={<Configuracao />}/>
-        <Route path='/filiais' element={<Sair />}/> */}
+        <Route path='/edit-encomenda' element={<EditarEncomenda />}/>
+        <Route path='/agenda' element={<Agenda />}/>
+        <Route path='/filiais' element={<Filiais />}/>
       </Routes>
     </Router>
   );

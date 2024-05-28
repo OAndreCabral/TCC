@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Checkbox, Form, Input } from 'antd';
 import Styles from './Login.module.css';
-import logo from '../../assets/logo.svg'
+import logo from '../../../../assets/logo.svg'
 import { Link } from 'react-router-dom';
 
 const onFinish = (values) => {

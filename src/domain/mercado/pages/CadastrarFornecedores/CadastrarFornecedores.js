@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import Styles from './EditarFornecedores.module.css';
+import Styles from './CadastrarFornecedores.module.css';
+import BotaoInput from '../../../../components/BotaoInput';
 
 import { Link } from 'react-router-dom';
 import {
@@ -8,10 +9,9 @@ import {
   LeftCircleOutlined, RightCircleOutlined, UserOutlined,
 } from '@ant-design/icons';
 import { 
-  Button, Layout, Menu, theme, Switch, 
-  Row, Col, Space 
+  Button, Layout, Menu, theme, 
+  Row, Col, 
 } from 'antd';
-import BotaoInput from '../../components/BotaoInput';
 
 const { Header, Sider, Content } = Layout;
 
@@ -95,7 +95,7 @@ const History = () => {
           }}
         >
           <div className={Styles.contentTitleFornecedores}>
-            <h1>Editar Fornecedores</h1>
+            <h1>Cadastrar Fornecedores</h1>
           </div>
           <div>
             <Row gutter={[16, 16]}>
@@ -118,9 +118,6 @@ const History = () => {
                 <BotaoInput placeholder={"Telefone"}/>         
               </Col>
               <Col xs={18} sm={12} md={8} lg={6}>
-              <Space direction="vertical">
-                <Switch checkedChildren="Ativo" unCheckedChildren="Jaime Kodama" defaultChecked />
-              </Space>
               </Col>
             </Row>
           </div>
