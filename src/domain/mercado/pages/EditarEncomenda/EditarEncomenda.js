@@ -148,13 +148,13 @@ const EditEncomenda = () => {
                 </Col>
             </Row>
             <Row gutter={[16, 16]} className={Styles.contentBottomButton}>
-            <Col>
-              <Button>Cancelar</Button>
-            </Col>
-            <Col>
-              <Button type='primary'>Salvar</Button>
-            </Col>
-          </Row>
+                <Col>
+                <Button>Cancelar</Button>
+                </Col>
+                <Col>
+                <Button type='primary'>Salvar</Button>
+                </Col>
+            </Row>
         </Content>
       </Layout>
     </Layout>

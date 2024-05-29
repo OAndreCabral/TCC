@@ -10,6 +10,8 @@ import Nfe from '../src/domain/mercado/pages/Nfe/Nfe';
 import EditarEncomenda from '../src/domain/mercado/pages/EditarEncomenda/EditarEncomenda';
 import Agenda from '../src/domain/mercado/pages/Agenda/Agenda';
 import Filiais from '../src/domain/mercado/pages/Filiais/Filiais';
+import ListaEntregas from '../src/domain/fornecedores/pages/ListaEntregas/ListaEntregas';
+import Agendar from '../src/domain/fornecedores/pages/Agendar/Agendar';
 
 function App() {
   return (
@@ -25,6 +27,8 @@ function App() {
         <Route path='/edit-encomenda' element={<EditarEncomenda />}/>
         <Route path='/agenda' element={<Agenda />}/>
         <Route path='/filiais' element={<Filiais />}/>
+        <Route path='/lista-entregas' element={<ListaEntregas />}/>
+        <Route path='/agendar' element={<Agendar />}/>
       </Routes>
     </Router>
   );
