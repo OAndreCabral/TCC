@@ -1,0 +1,50 @@
+.menu {
+    height: 100vh;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    margin-right: 24px;
+}
+
+.headerUser {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-evenly;
+    gap: 16px;
+}
+
+.contentTitle {
+    display: flex;
+    justify-content: flex-start;
+    padding-bottom: 25px;
+}
+
+.contentPdf {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+}
+
+.pdf {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.button {
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    gap: 8px;
+}
+
+.contentTitleEndereco {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 25px;
+    padding-bottom: 25px;
+}
