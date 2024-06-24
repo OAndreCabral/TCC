@@ -3,301 +3,259 @@ import Styles from './Fornecedores.module.css';
 
 import { Link } from 'react-router-dom';
 import {
-  EditOutlined,
-  DatabaseOutlined,
-  TruckOutlined,
-  ContainerOutlined,
-  CarryOutOutlined,
-  LogoutOutlined,
-  MenuUnfoldOutlined,
-  MenuFoldOutlined,SignalFilled,
-  UserOutlined,PlusOutlined
+  	EditOutlined,
+	SignalFilled,
+	PlusOutlined,
 } from '@ant-design/icons';
-import { Button, Layout, Menu, theme, Table, Row, Col, Space } from 'antd';
+import { Input, Button, Layout, Table, Row, Col, Dropdown, Menu, Checkbox } from 'antd';
 import BotaoInput from '../../../../components/BotaoInput';
 import BotaoBuscar from '../../../../components/BotaoBuscar';
+import DropdownButton from '../../../../components/DropdownButton';
+import IMask from 'imask';
 
-const { Header, Sider, Content } = Layout;
+const { Content } = Layout;
 
-const History = () => {
-    const [collapsed, setCollapsed] = useState(false);
-    const {
-        token: { colorBgContainer, borderRadiusLG },
-    } = theme.useToken();
+const Fornecedores = () => {
+	const [dropdownVisible, setDropdownVisible] = useState(false);
+	const [visibleColumns, setVisibleColumns] = useState({
+		id: true,
+		nomeFantasia: true,
+		cnpj: true,
+		status: true,
+	});
 
-    const data = [
-      {
-        key: '1',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Inativo',
-      },
-      {
-        key: '2',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Ativo',
-      },
-      {
-        key: '3',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Ativo',
-      },
-      {
-        key: '4',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Ativo',
-      },
-      {
-        key: '5',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Inativo',
-      },
-      {
-        key: '6',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Ativo',
-      },
-      {
-        key: '7',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Ativo',
-      },
-      {
-        key: '8',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Ativo',
-      },
-      {
-        key: '9',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Inativo',
-      },
-      {
-        key: '10',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Ativo',
-      },
-      {
-        key: '11',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Ativo',
-      },
-      {
-        key: '12',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Inativo',
-      },
-      {
-        key: '13',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Ativo',
-      },
-      {
-        key: '14',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Ativo',
-      },
-      {
-        key: '15',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Inativo',
-      },
-      {
-        key: '16',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Ativo',
-      },
-      {
-        key: '17',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Ativo',
-      },
-      {
-        key: '18',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Ativo',
-      },
-      {
-        key: '19',
-        nomeFantasia: 'Dragão Celestial das Terras Encantadas do Sol Nascente',
-        CNPJ: '12.345.678/0001-95',
-        status: 'Inativo',
+	const data = [
+		{
+			"id": "1",
+			"nomeFantasia": "Fornecedor 1",
+			"cnpj": "72.587.873/0001-53",
+			"status": "ativo",
+		},
+    {
+			"id": "2",
+			"nomeFantasia": "Fornecedor 1",
+			"cnpj": "72.587.873/0001-53",
+			"status": "ativo",
+		},
+    {
+			"id": "3",
+			"nomeFantasia": "Fornecedor 1",
+			"cnpj": "72.587.873/0001-53",
+			"status": "ativo",
+		},
+    {
+			"id": "4",
+			"nomeFantasia": "Fornecedor 1",
+			"cnpj": "72.587.873/0001-53",
+			"status": "ativo",
+		},
+    {
+			"id": "5",
+			"nomeFantasia": "Fornecedor 1",
+			"cnpj": "72.587.873/0001-53",
+			"status": "ativo",
+		},
+    {
+			"id": "6",
+			"nomeFantasia": "Fornecedor 1",
+			"cnpj": "72.587.873/0001-53",
+			"status": "ativo",
+		},
+    {
+			"id": "7",
+			"nomeFantasia": "Fornecedor 1",
+			"cnpj": "72.587.873/0001-53",
+			"status": "ativo",
+		},
+    {
+			"id": "8",
+			"nomeFantasia": "Fornecedor 1",
+			"cnpj": "72.587.873/0001-53",
+			"status": "ativo",
+		},
+    {
+			"id": "9",
+			"nomeFantasia": "Fornecedor 1",
+			"cnpj": "72.587.873/0001-53",
+			"status": "ativo",
+		},
+    {
+			"id": "10",
+			"nomeFantasia": "Fornecedor 1",
+			"cnpj": "72.587.873/0001-53",
+			"status": "ativo",
+		},
+    {
+			"id": "11",
+			"nomeFantasia": "Fornecedor 1",
+			"cnpj": "72.587.873/0001-53",
+			"status": "ativo",
+		},
+	];
+
+  const situacoes = [
+		{
+			label: 'Ativo',
+			id: '1',
+		},
+		{
+			label: 'Inativo',
+			id: '2',
+		},
+	]
+
+	const columns = [
+		{
+			title: 'ID',
+			dataIndex: 'id',
+			key: 'id',
+			sorter: (a, b) => a.id - b.id,
+		},
+		{
+			title: 'Nome fantasia',
+			dataIndex: 'nomeFantasia',
+			key: 'nomeFantasia',
+			sorter: (a, b) => a.nomeFantasia.localeCompare(b.nomeFantasia),
+		},
+		{
+			title: 'CNPJ',
+			dataIndex: 'cnpj',
+			key: 'cnpj',
+			sorter: (a, b) => a.cnpj.localeCompare(b.cnpj),
+		},
+		{
+			title: 'Situação',
+			dataIndex: 'status',
+			key: 'status',
+			onFilter: (value, record) => record.status.indexOf(value) === 0,
+		},
+		{
+		title: 'Ações',
+		render: (record) => (
+			<Link to={`/edit-fornecedores/${record.id}`}>
+			<EditOutlined style={{ cursor: 'pointer' }} />
+			</Link>
+		)
+		},     
+	].filter(column => column.key ? visibleColumns[column.key] : true);
+
+	const onChange = (pagination, filters, sorter, extra) => {
+		return ('params', pagination, filters, sorter, extra);
+	};
+
+	const handleVisibleChange = columnid => {
+		setVisibleColumns({
+		  ...visibleColumns,
+		  [columnid]: !visibleColumns[columnid],
+		});
+	};
+
+	const handleMenuClick = (e) => {
+		e.domEvent.stopPropagation();
+		handleVisibleChange(e.key);
+	  };
+	  
+	const handleDropdownVisibleChange = (visible) => {
+		setDropdownVisible(visible);
+	};
+
+	const menu = (
+		<Menu onClick={handleMenuClick}>
+			{Object.keys(visibleColumns).map(columnKey => {
+
+				return (
+				<Menu.Item key={columnKey}>
+					<Checkbox
+						checked={visibleColumns[columnKey]}
+					>
+						{columnKey}
+					</Checkbox>
+				</Menu.Item>
+				)
+			})}
+		</Menu>
+	);
+
+  const MaskedInput = ({ mask, ...props }) => {
+    const inputRef = React.useRef();
+  
+    React.useEffect(() => {
+      if (inputRef.current) {
+        const maskOptions = {
+          mask: mask,
+        };
+        const imaskInstance = IMask(inputRef.current.input, maskOptions);
+        return () => imaskInstance.destroy();
       }
-    ];
+    }, [mask]);
+  
+    return <Input style={{ border: '1px solid #8D8D8D', color: '#8D8D8D'}} size='large' ref={inputRef} {...props} />;
+  };
 
-    const columns = [
-      {
-        title: 'ID',
-        dataIndex: 'key',
-        defaultSortOrder: 'descend',
-        sorter: (a, b) => a.key - b.key,
-      },
-      {
-        title: 'Nome Fantasia',
-        dataIndex: 'nomeFantasia',
-        defaultSortOrder: 'descend',
-        sorter: (a, b) => a.nomeFantasia.localeCompare(b.nomeFantasia),
-      },
-      {
-        title: 'CNPJ',
-        dataIndex: 'CNPJ',
-        sorter: (a, b) => a.CNPJ.localeCompare(b.CNPJ),
-      },
-      {
-        title: 'Situação',
-        dataIndex: 'status',
-        filters: [
-          {
-            text: 'Ativo',
-            value: 'Ativo',
-          },
-          {
-            text: 'Inativo',
-            value: 'Inativo',
-          },
-        ],
-        onFilter: (value, record) => record.status.indexOf(value) === 0,
-      },
-      {
-        title: 'Ações',
-        render: (record) => (
-          <Link to={`/edit-fornecedores/${record.key}`}>
-            <EditOutlined style={{ cursor: 'pointer' }} />
-          </Link>
-        )
-      },     
-    ];
-
-    const onChange = (pagination, filters, sorter, extra) => {
-      return ('params', pagination, filters, sorter, extra);
-    };
-  return (
-    <Layout>
-      <Sider trigger={null} collapsible collapsed={collapsed}>
-        <div className="demo-logo-vertical" />
-        <Menu
-          theme="dark"
-          mode="inline"
-          defaultSelectedKeys={['3']}
-          className={Styles.menu}
-          items={[
-            {
-              key: '1',
-              icon: <DatabaseOutlined />,
-              label: <Link to="/dashboard">Dashboard</Link>,
-            },
-            {
-              key: '2',
-              icon: <TruckOutlined />,
-              label: <Link to="/encomendas">Encomendas</Link>,
-            },
-            {
-              key: '3',
-              icon: <ContainerOutlined />,
-              label: <Link to='/fornecedores'>Fornecedores</Link>,
-            },
-            {
-              key: '4',
-              icon: <CarryOutOutlined />,
-              label: <Link to='/agenda'>Agenda</Link>,
-            },
-            {
-              key: '5',
-              icon: <LogoutOutlined />,
-              label: <Link to='/filiais'>Filiais</Link>,
-            },
-          ]}
-        />
-      </Sider>
-      <Layout>
-        <Header
-          style={{
-            padding: 0,
-            background: colorBgContainer,
-            backgroundColor: 'gray'
-          }}
-        >
-            <div className={Styles.header}>
-                <Button
-                type="text"
-                icon={collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />}
-                onClick={() => setCollapsed(!collapsed)}
-                style={{
-                    fontSize: '16px',
-                    width: 64,
-                    height: 64,
-                }}
-                />
-                <div className={Styles.headerUser}>
-                    <UserOutlined />
-                    <div>Bátima Fernades</div>
-                </div>
-            </div>
-        </Header>
-        <Content
-          style={{
-            margin: '24px 16px',
-            padding: 24,
-            minHeight: 280,
-            background: colorBgContainer,
-            borderRadius: borderRadiusLG,
-          }}
-        >
-        <div className={Styles.contentTitle}>
-          <h1>Fornecedores</h1>
-        </div>
-        <div className={Styles.contentButtons}>
-          <Row gutter={[16, 16]}>
-            <Col xs={28} sm={28} md={28} lg={28}>
-              <BotaoInput placeholder={"Nome Fantasia"}/>
-            </Col>
-            <Col xs={28} sm={28} md={28} lg={28}>
-              <BotaoInput placeholder={"CNPJ"}/>
-              </Col>
-            <Col xs={28} sm={28} md={28} lg={28}>
-              <BotaoBuscar />
-            </Col>
-          </Row>
-        </div>
-        <div>
-          <Row gutter={[16, 16]} className={Styles.contentTopButtons}>
-            <Col>
-              <Button icon={<SignalFilled />}>Colunas</Button>
-            </Col>
-            <Col>
-              <Button type='primary' icon={<PlusOutlined />}>Adicionar</Button>
-            </Col>
-          </Row>
-        </div>
-        <Table
-          columns={columns}
-          dataSource={data}
-          onChange={onChange}
-          showSorterTooltip={{
-            target: 'sorter-icon',
-          }}
-        />
-        </Content>
-      </Layout>
-    </Layout>
-  );
+	return (
+		<Content className={Styles.content}>
+			<h1>Fornecedores</h1>
+			<div className={Styles.contentButtons}>
+				<Row gutter={[16, 16]}>
+					<Col xs={28} sm={28} md={28} lg={28}>
+						<p style={{fontSize: 20}}>Filtros:</p>
+					</Col>
+				</Row>
+				<Row gutter={[16, 16]}>
+					<Col xs={28} sm={28} md={28} lg={28}>
+						<BotaoInput placeholder={"Fornecedor"}/>
+					</Col>
+          <Col xs={28} sm={28} md={28} lg={28}>
+            <MaskedInput mask="00.000.000/0000-00" placeholder="CNPJ" />
+          </Col>
+          <Col xs={28} sm={28} md={28} lg={28}>
+						<DropdownButton
+							placeholder="Situação"
+							items={situacoes}
+						/>
+					</Col>
+					<Col xs={28} sm={28} md={28} lg={28}>
+						<BotaoBuscar />
+					</Col>
+				</Row>
+			</div>
+			<Row gutter={[16, 16]} className={Styles.contentTopButtons}>
+				<Col xs={28} sm={28} md={28} lg={28}>
+					<Dropdown
+						visible={dropdownVisible}
+						onVisibleChange={handleDropdownVisibleChange}
+						overlay={menu}
+						trigger={['click']}
+					>
+						<Button
+							icon={<SignalFilled />}
+							className={Styles.column}
+						>
+							Colunas
+						</Button>
+					</Dropdown>
+				</Col>
+				<Col xs={28} sm={28} md={28} lg={28}>
+					<Button
+						icon={<PlusOutlined />}
+						className={Styles.add}
+						onMouseOver={(e) => {
+							e.target.style.backgroundColor = '#001C36';
+							e.target.style.color = 'white';
+							e.target.style.borderColor = 'white';
+						}}
+					>
+						Adicionar
+					</Button>
+				</Col>
+			</Row>
+			<Table
+				columns={columns}
+				dataSource={data}
+				onChange={onChange}
+			/>
+		</Content>
+	);
 };
 
-export default History;
+export default Fornecedores;

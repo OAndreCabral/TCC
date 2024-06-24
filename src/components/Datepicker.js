@@ -2,13 +2,21 @@ import React from 'react';
 import { ConfigProvider, DatePicker } from 'antd';
 import ptBR from 'antd/lib/locale/pt_BR';
 
-const { 
-    RangePicker,
-} = DatePicker;
+import Style from './Datepicker.module.css'
 
-const Datepicker = ({ disabled = false }) => (
-    <ConfigProvider locale={ptBR}>
-        <RangePicker disabled={disabled}/>
-    </ConfigProvider>
-);
+const { RangePicker } = DatePicker;
+
+const Datepicker = ({ onChange }) => {
+	return (
+		<ConfigProvider locale={ptBR}>
+			<RangePicker
+				size='large'
+				className={Style.rangePicker}
+				format="DD-MM-YYYY"
+				onChange={onChange}
+			/>
+		</ConfigProvider>
+	);
+};
+
 export default Datepicker;

@@ -1,17 +1,47 @@
-import React, { useState } from 'react';
+import { Button, Menu, Dropdown } from 'antd';
 import { SearchOutlined } from '@ant-design/icons';
-import { Button, Flex } from 'antd';
 
+import Style from './BotaoBuscar.module.css'
 
-const BotaoBuscar = () => {
-  return (
-      <Flex gap="small" vertical>
-        <Flex wrap gap="small">
-          <Button type="primary" icon={<SearchOutlined />}>
-            Buscar
-          </Button>
-        </Flex>
-      </Flex>
-  );
+const BotaoBusca = ({ onSearch, onReset }) => {
+	const menu = (
+		<Menu>
+		  <Menu.Item onClick={onReset}>
+			Limpar filtros
+		  </Menu.Item>
+		</Menu>
+	  );
+
+	return (
+		<div className={Style.botaoBuscar}>
+			<Button
+				className={Style.botao}
+				size='large'
+				icon={<SearchOutlined />}
+				onClick={onSearch}
+				onMouseOver={(e) => {
+					e.target.style.backgroundColor = '#001C36';
+					e.target.style.color = 'white';
+					e.target.style.borderColor = 'white';
+				}}
+			>
+				Buscar
+			</Button>
+			<Dropdown overlay={menu} trigger={['click']}>
+				<Button
+					className={Style.limpaFiltro}
+					size='large'
+					onMouseOver={(e) => {
+						e.target.style.backgroundColor = '#001C36';
+						e.target.style.color = 'white';
+						e.target.style.borderColor = 'white';
+					}}
+				>
+					<p>...</p>	
+				</Button>
+			</Dropdown>
+		</div>
+	);
 };
-export default BotaoBuscar;
+
+export default BotaoBusca;

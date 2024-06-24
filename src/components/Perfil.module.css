@@ -1,0 +1,10 @@
+.perfil {
+    width: 170px;
+    justify-content: space-around;
+    display: flex;
+    align-items: center;
+    border: 1px solid #01386A;
+    border-radius: 15px;
+    margin-inline: 20px;
+    cursor: pointer;
+}

@@ -1,0 +1,9 @@
+.rangePicker {
+    border: 1px solid #8D8D8D;
+    width: 250px;
+    color: #8D8D8D;
+}
+
+.rangePicker::placeholder {
+    color: #8D8D8D;
+}

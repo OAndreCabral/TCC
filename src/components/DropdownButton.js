@@ -1,50 +1,41 @@
-import React from 'react';
-import { DownOutlined, UserOutlined } from '@ant-design/icons';
-import { Button, Dropdown, message, Space, Menu } from 'antd';
+import React, { useState } from 'react';
+import { DownOutlined } from '@ant-design/icons';
+import { Button, Dropdown, Menu } from 'antd';
 
-const handleMenuClick = (e) => {
-  message.info('Click on menu item.');
-  console.log('click', e);
-};
-const items = [
-  {
-    label: '1st menu item',
-    key: '1',
-    icon: <UserOutlined />,
-  },
-  {
-    label: '2nd menu item',
-    key: '2',
-    icon: <UserOutlined />,
-  },
-  {
-    label: '3rd menu item',
-    key: '3',
-    icon: <UserOutlined />,
-    danger: true,
-  },
-  {
-    label: '4rd menu item',
-    key: '4',
-    icon: <UserOutlined />,
-    danger: true,
-    disabled: true,
-  },
-];
-const menuProps = {
-  items,
-  onClick: handleMenuClick,
-};
-const DropdownButton = ({ placeholder }) => (
-  <Space wrap>
-    <Dropdown menu={menuProps}>
-      <Button>
-        <Space>
-          { placeholder }
-          <DownOutlined />
-        </Space>
-      </Button>
-    </Dropdown>
-  </Space>
-);
+import Style from './DropdownButton.module.css'
+
+const DropdownButton = ({ placeholder, items, onChange }) => {
+	const [selectedItem, setSelectedItem] = useState(placeholder);
+
+	const handleMenuClick = (e) => {
+		const selectedLabel = items[e.key].label;
+		setSelectedItem(selectedLabel);
+		if (onChange) {
+			onChange(selectedLabel);
+		}
+	};
+
+	const menu = () => (
+		<Menu onClick={handleMenuClick}>
+			{items.map((item, index) => (
+				<Menu.Item key={index}>
+					{item.label}
+				</Menu.Item>
+			))}
+		</Menu>
+	);
+
+	return (
+		<Dropdown overlay={menu} trigger={['click']}>
+			<Button
+				size='large'
+				className={Style.button}
+			>
+				{selectedItem}
+				<DownOutlined />
+			</Button>
+		</Dropdown>
+	)
+}
+
 export default DropdownButton;

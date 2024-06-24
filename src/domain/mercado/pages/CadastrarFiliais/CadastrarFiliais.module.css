@@ -5,25 +5,32 @@
     padding: 25px 25px 25px 25px;
 }
 
-.contentButtons {
+.contentTitleFornecedores {
     display: flex;
-    flex-direction: column;
-    gap: 20px;
+    justify-content: flex-start;
+    padding-bottom: 25px;
 }
 
-.contentTopButtons {
+.contentTitleEndereco {
+    display: flex;
+    justify-content: flex-start;
+    padding-top: 25px;
     padding-bottom: 25px;
+}
+
+.contentBottomButton {
+    padding-top: 25px;
     display: flex;
     justify-content: end;
 }
 
-.column {
-    color: #001C36;
+.buttonCancel {
     border: 1px solid #001C36;
-    background: none;
+    background-color: none;
+    color: #001C36;
 }
 
-.add {
+.buttonSalvar {
     border: 1px solid #001C36;
     background-color: #001C36;
     color: white

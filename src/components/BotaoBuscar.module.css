@@ -1,0 +1,27 @@
+.botaoBuscar {
+    display: flex;
+    align-items: center;
+    background-color: #001C36;
+    color: white;
+    border-radius: 5px;
+}
+
+.botao {
+    background: none;
+    color: white;
+    border: none;
+}
+
+.limpaFiltro {
+    background: none;
+    color: white;
+    border: none;
+    display: flex;
+    align-items: center;
+    border-left: 1px solid white;
+    border-radius: 0 5px 5px 0;
+}
+
+.botao:hover {
+    background-color: #001C36;
+}

@@ -1,16 +1,31 @@
-.formsComplete {
+.content {
     display: flex;
-    justify-content: center;
-    width: 100vw;
-    height: 100vh;
-}
-
-.logo {
-    width: 250px;
-    height: 250px;
 }
 
 .formsLogin {
     display: flex;
+    flex-direction: column;
+    justify-content: center;
     align-items: center;
+    gap: 20px;
+    width: 50vw;
+    height: 100vh;
+}
+
+.headerLogin {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.formButton {
+    width: 25%;
+}
+
+.button {
+    width: 100%;
+    height: 50px;
+    font-size: 20px;
+    background-color: #0054A0;
 }
