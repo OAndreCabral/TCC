@@ -1,5 +1,5 @@
 import { Button, Layout, Image } from 'antd';
-import { useEffect, useState } from 'react';
+import { createContext, useEffect, useState } from 'react';
 import { Routes, Route, Link, useNavigate, useLocation } from 'react-router-dom';
 import {
     MenuFoldOutlined,
@@ -14,6 +14,7 @@ import Dashboard from '../domain/mercado/pages/Dashboard/Dashboard';
 import Encomendas from '../domain/mercado/pages/Encomendas/Encomendas'
 import Fornecedores from '../domain/mercado/pages/Fornecedores/Fornecedores'
 import CadastroFiliais from '../domain/mercado/pages/CadastrarFiliais/CadastrarFiliais'
+import EditarPerfil from '../domain/mercado/pages/EditarPerfil/EditarPerfil'
 import Filiais from '../domain/mercado/pages/Filiais/Filiais';
 import Agenda from '../domain/mercado/pages/Agenda/Agenda';
 import Perfil from './Perfil';
@@ -23,6 +24,8 @@ import Logo from '../assets/logo.jpg'
 import LogoCollapsed from '../assets/logoCollapsed.png'
 
 const { Header, Sider, Content } = Layout;
+
+export const UserContext = createContext();
 
 const menuItems = [
     {
@@ -117,14 +120,17 @@ function MainLayout() {
                         height: '100%'
                     }}
                 >
-                    <Routes>
-                        <Route path='/dashboard' element={<Dashboard />}/>
-                        <Route path='/encomendas' element={<Encomendas />}/>
-                        <Route path='/fornecedores' element={<Fornecedores />}/>
-                        <Route path='/filiais' element={<Filiais />}/>
-                        <Route path='/agenda' element={<Agenda />}/>
-                        <Route path='/cadastro-filiais' element={<CadastroFiliais />}/>
-                    </Routes>
+                    <UserContext.Provider value={user}>
+                        <Routes>
+                            <Route path='/dashboard' element={<Dashboard />}/>
+                            <Route path='/encomendas' element={<Encomendas />}/>
+                            <Route path='/fornecedores' element={<Fornecedores />}/>
+                            <Route path='/filiais' element={<Filiais />}/>
+                            <Route path='/agenda' element={<Agenda />}/>
+                            <Route path='/cadastro-filiais' element={<CadastroFiliais />}/>
+                            <Route path='/editar-perfil' element={<EditarPerfil />}/>
+                        </Routes>
+                    </UserContext.Provider>
                 </Content>
             </Layout>
         </Layout>

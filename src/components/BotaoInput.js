@@ -1,7 +1,8 @@
 import { Input } from "antd";
 import Style from './BotaoInput.module.css';
+import InputMask from 'react-input-mask';
 
-const BotaoInput = ({ placeholder, password, onChange, ref, ...props }) => {
+const BotaoInput = ({ placeholder, password, onChange, mask, ...props }) => {
     if (password) {
         return (
             <Input.Password
@@ -14,13 +15,20 @@ const BotaoInput = ({ placeholder, password, onChange, ref, ...props }) => {
         );
     }
 
+    if (mask) {
+        return (
+            <InputMask mask={mask} onChange={onChange} {...props}>
+                {(inputProps) => <Input size="large" className={Style.input} placeholder={placeholder} {...inputProps} />}
+            </InputMask>
+        );
+    }
+
     return (
         <Input
             size="large"
             className={Style.input}
             placeholder={placeholder}
             onChange={onChange}
-            ref={ref}
             {...props}
         />
     );
