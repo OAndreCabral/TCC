@@ -5,17 +5,15 @@ import { Button, Layout, Row, Col, Modal, Form, message } from 'antd';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { UserContext } from '../../../../components/MainLayout';
-import { Select } from 'antd/lib';
 
 const { Content } = Layout;
-const { Option } = Select;
 
 const EditarPerfil = () => {
   const [visible, setVisible] = useState(false);
-  const [userData, setUserData] = useState({});
+  const [userData, setUserData] = useState([]);
   const navigate = useNavigate();
   const [form] = Form.useForm();
-  const user = useContext(UserContext);
+  const { user, updateUser } = useContext(UserContext);
 
   function validateCNPJ(_, value) {
     const cnpj = value.replace(/\D/g, '');
@@ -56,8 +54,6 @@ const EditarPerfil = () => {
       }
     })
     .then(response => {     
-      
-      
       setUserData(response.data);
       form.setFieldsValue({
         nomeFantasia: response.data.fantasy_name,
@@ -95,11 +91,6 @@ const EditarPerfil = () => {
     let cep = values.cep;
     cep = cep.replace(/\D/g, '');
 
-    console.log('/////////////////////////////////////////////////////////////////')
-    console.log(values)
-    console.log('/////////////////////////////////////////////////////////////////')
-    
-
     const objUpdate = {
       fantasy_name: values.nomeFantasia,
       corporate_reason: values.razaoSocial,
@@ -126,6 +117,7 @@ const EditarPerfil = () => {
     .then(response => {
       console.log('Perfil atualizado com sucesso:', response);
       message.success('Usuário atualizado com sucesso!');
+      updateUser({ fantasy_name: objUpdate.fantasy_name });
     })
     .catch(error => {
       console.error('Erro ao atualizar o perfil:', error);

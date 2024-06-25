@@ -18,7 +18,7 @@ const BotaoInput = ({ placeholder, password, onChange, mask, ...props }) => {
     if (mask) {
         return (
             <InputMask mask={mask} onChange={onChange} {...props}>
-                {(inputProps) => <Input size="large" className={Style.input} placeholder={placeholder} {...inputProps} />}
+                {(inputProps) => <Input {...props} size="large" className={Style.input} placeholder={placeholder} {...inputProps} />}
             </InputMask>
         );
     }

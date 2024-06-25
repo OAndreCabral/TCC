@@ -15,7 +15,10 @@ const Login = () => {
 
     const onFinish = async (values) => {
         try {
-            const response = await axios.post('http://localhost:3000/login', values);
+            const response = await axios.post('http://localhost:3000/login', {
+                email: values.email,
+                password: values.password
+            });
             
             console.log('Success:', response.data);
 
@@ -24,7 +27,9 @@ const Login = () => {
             } else {
                 sessionStorage.setItem('user', JSON.stringify(response.data));
             }
+            
 
+            if(response.data.user_type === "PROVIDER") return navigate('/encomendas');
             navigate('/dashboard');
         } catch (error) {
             if (error.response && error.response.status === 401) {

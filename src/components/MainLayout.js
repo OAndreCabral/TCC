@@ -14,6 +14,11 @@ import Dashboard from '../domain/mercado/pages/Dashboard/Dashboard';
 import Encomendas from '../domain/mercado/pages/Encomendas/Encomendas'
 import Fornecedores from '../domain/mercado/pages/Fornecedores/Fornecedores'
 import CadastroFiliais from '../domain/mercado/pages/CadastrarFiliais/CadastrarFiliais'
+import CadastroEncomenda from '../domain/mercado/pages/Nfe/Nfe'
+import EditarEncomenda from '../domain/mercado/pages/EditarEncomenda/EditarEncomenda';
+import EditarFornecedores from '../domain/mercado/pages/EditarFornecedores/EditarFornecedores'
+import EditarFilial from '../domain/mercado/pages/EditarFilial/EditarFilial';
+import CadastroFornecedores from '../domain/mercado/pages/CadastrarFornecedores/CadastrarFornecedores'
 import EditarPerfil from '../domain/mercado/pages/EditarPerfil/EditarPerfil'
 import Filiais from '../domain/mercado/pages/Filiais/Filiais';
 import Agenda from '../domain/mercado/pages/Agenda/Agenda';
@@ -25,9 +30,25 @@ import LogoCollapsed from '../assets/logoCollapsed.png'
 
 const { Header, Sider, Content } = Layout;
 
-export const UserContext = createContext();
+export const UserContext = createContext({
+    user: null,
+    updateUser: () => {},
+});
 
-const menuItems = [
+const menuItemsProvider = [
+    {
+        key: '2',
+        icon: <CodeSandboxOutlined />,
+        label: <Link to="/encomendas">Entregas</Link>,
+    },
+    {
+        key: '5',
+        icon: <CalendarOutlined />,
+        label: <Link to="/agenda">Agenda</Link>,
+    },
+];
+
+const menuItemsDefault = [
     {
         key: '1',
         icon: <ProjectOutlined />,
@@ -53,13 +74,20 @@ const menuItems = [
         icon: <CalendarOutlined />,
         label: <Link to="/agenda">Agenda</Link>,
     },
-]
+];
 
 function MainLayout() {
     const [collapsed, setCollapsed] = useState(false);
     const location = useLocation();
     const navigate = useNavigate();
-    const user = JSON.parse(localStorage.getItem('user')) || JSON.parse(sessionStorage.getItem('user'));
+    const [user, setUser] = useState(JSON.parse(localStorage.getItem('user')) || JSON.parse(sessionStorage.getItem('user')));
+
+    const updateUser = (newData) => {
+        setUser(oldData => ({
+          ...oldData,
+          ...newData,
+        }));
+      };
 
     useEffect(() => {
         const user = JSON.parse(localStorage.getItem('user')) || JSON.parse(sessionStorage.getItem('user'));
@@ -68,6 +96,10 @@ function MainLayout() {
             navigate('/unauthorized');
         }
     }, [location]);
+
+    const menuItems = user && user.user_type === 'PROVIDER' ? menuItemsProvider : menuItemsDefault;
+
+    const defaultValue = user && user.user_type === 'PROVIDER' ? '2' : '1';
 
     const imageSrc = collapsed ? LogoCollapsed : Logo;
     const iconButton = collapsed ? <MenuUnfoldOutlined /> : <MenuFoldOutlined />;
@@ -85,7 +117,7 @@ function MainLayout() {
                         preview={false}
                     />
                 </div>
-                <Menu items={menuItems} />
+                <Menu items={menuItems} value={defaultValue} />
             </Sider>
             <Layout>
                 <Header
@@ -120,7 +152,7 @@ function MainLayout() {
                         height: '100%'
                     }}
                 >
-                    <UserContext.Provider value={user}>
+                    <UserContext.Provider value={{ user, updateUser }}>
                         <Routes>
                             <Route path='/dashboard' element={<Dashboard />}/>
                             <Route path='/encomendas' element={<Encomendas />}/>
@@ -129,6 +161,11 @@ function MainLayout() {
                             <Route path='/agenda' element={<Agenda />}/>
                             <Route path='/cadastro-filiais' element={<CadastroFiliais />}/>
                             <Route path='/editar-perfil' element={<EditarPerfil />}/>
+                            <Route path='/cadastro-fornecedores' element={<CadastroFornecedores />}/>
+                            <Route path='/cadastro-encomenda' element={<CadastroEncomenda />}/>
+                            <Route path='/editar-encomenda/:id' element={<EditarEncomenda />}/>
+                            <Route path='/editar-filial/:id' element={<EditarFilial />}/>
+                            <Route path='/editar-fornecedores/:id' element={<EditarFornecedores />}/>
                         </Routes>
                     </UserContext.Provider>
                 </Content>

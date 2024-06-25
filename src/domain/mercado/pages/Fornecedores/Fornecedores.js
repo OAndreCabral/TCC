@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Styles from './Fornecedores.module.css';
-
 import { Link } from 'react-router-dom';
 import {
   	EditOutlined,
@@ -12,86 +11,37 @@ import BotaoInput from '../../../../components/BotaoInput';
 import BotaoBuscar from '../../../../components/BotaoBuscar';
 import DropdownButton from '../../../../components/DropdownButton';
 import IMask from 'imask';
+import { UserContext } from '../../../../components/MainLayout';
+import axios from 'axios';
 
 const { Content } = Layout;
 
 const Fornecedores = () => {
+	const { user } = useContext(UserContext);
 	const [dropdownVisible, setDropdownVisible] = useState(false);
+	const [filiais, setFiliais] = useState([]);
 	const [visibleColumns, setVisibleColumns] = useState({
 		id: true,
-		nomeFantasia: true,
+		fantasy_name: true,
 		cnpj: true,
 		status: true,
 	});
 
-	const data = [
-		{
-			"id": "1",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "2",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "3",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "4",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "5",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "6",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "7",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "8",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "9",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "10",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "11",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-	];
+	useEffect(() => {
+		const token = user.token;
+	
+		axios.get('http://localhost:3000/users/list-provider', {
+		  headers: {
+			'Authorization': `Bearer ${token}`
+		  }
+		})
+		.then(response => {     
+			setFiliais(response.data);
+		})
+		.catch(error => {
+		  console.error('Erro ao buscar os dados do perfil:', error);
+		});
+	  }, [user.token]);
 
   const situacoes = [
 		{
@@ -113,9 +63,10 @@ const Fornecedores = () => {
 		},
 		{
 			title: 'Nome fantasia',
-			dataIndex: 'nomeFantasia',
-			key: 'nomeFantasia',
-			sorter: (a, b) => a.nomeFantasia.localeCompare(b.nomeFantasia),
+			dataIndex: 'fantasy_name',
+			key: 'fantasy_name',
+			with: '100%',
+			sorter: (a, b) => a.fantasy_name.localeCompare(b.fantasy_name),
 		},
 		{
 			title: 'CNPJ',
@@ -132,8 +83,8 @@ const Fornecedores = () => {
 		{
 		title: 'Ações',
 		render: (record) => (
-			<Link to={`/edit-fornecedores/${record.id}`}>
-			<EditOutlined style={{ cursor: 'pointer' }} />
+			<Link to={`/editar-fornecedores/${record.id}`}>
+				<EditOutlined style={{ cursor: 'pointer' }} />
 			</Link>
 		)
 		},     
@@ -236,22 +187,25 @@ const Fornecedores = () => {
 					</Dropdown>
 				</Col>
 				<Col xs={28} sm={28} md={28} lg={28}>
-					<Button
-						icon={<PlusOutlined />}
-						className={Styles.add}
-						onMouseOver={(e) => {
-							e.target.style.backgroundColor = '#001C36';
-							e.target.style.color = 'white';
-							e.target.style.borderColor = 'white';
-						}}
-					>
-						Adicionar
-					</Button>
+					<Link to={`/cadastro-fornecedores`}>
+						<Button
+							icon={<PlusOutlined />}
+							className={Styles.add}
+							onMouseOver={(e) => {
+								e.target.style.backgroundColor = '#001C36';
+								e.target.style.color = 'white';
+								e.target.style.borderColor = 'white';
+							}}
+						>
+							Adicionar
+						</Button>
+
+					</Link>
 				</Col>
 			</Row>
 			<Table
 				columns={columns}
-				dataSource={data}
+				dataSource={filiais}
 				onChange={onChange}
 			/>
 		</Content>

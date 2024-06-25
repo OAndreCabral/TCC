@@ -35,7 +35,7 @@ const Perfil = ({ fantasyName }) => {
         </Menu>
     );
 
-    const truncatedFantasyName = fantasyName.length > 20 ? fantasyName.substring(0, 20) + '...' : fantasyName;
+    const truncatedFantasyName = fantasyName.length > 10 ? fantasyName.substring(0, 10) + '...' : fantasyName;
 
     return (
         <Dropdown overlay={menu} trigger={['click']}>

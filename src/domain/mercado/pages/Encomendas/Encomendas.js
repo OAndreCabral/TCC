@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Styles from './Encomendas.module.css';
 
 import { Link } from 'react-router-dom';
@@ -7,144 +7,99 @@ import {
 	SignalFilled,
 	PlusOutlined,
 } from '@ant-design/icons';
-import { Button, Layout, Table, Row, Col, Dropdown, Menu, Checkbox } from 'antd';
+import { Input, Button, Layout, Table, Row, Col, Dropdown, Menu, Checkbox, Form } from 'antd';
 import BotaoInput from '../../../../components/BotaoInput';
 import BotaoBuscar from '../../../../components/BotaoBuscar';
-import Datepicker from '../../../../components/Datepicker';
 import DropdownButton from '../../../../components/DropdownButton';
+import IMask from 'imask';
+import { UserContext } from '../../../../components/MainLayout';
+import axios from 'axios';
+import moment from 'moment';
 
 const { Content } = Layout;
 
+const STATUS = [
+    {
+        key: "AG_CONFIRMACAO",
+        label: "Ag. Confirmação"
+    },
+    {
+        key: "AG_ENTREGA",
+        label: "Ag. Entrega"
+    },
+    {
+        key: "CANCELADO",
+        label: "Cancelado"
+    },
+    {
+        key: "ENTREGUE",
+        label: "Entregue"
+    },
+]
+
+
 const Encomendas = () => {
+	const { user } = useContext(UserContext);
 	const [dropdownVisible, setDropdownVisible] = useState(false);
+	const [filiais, setFiliais] = useState([]);
+	const [originalFiliais, setOriginalFiliais] = useState([]);
+	const [form] = Form.useForm();
 	const [visibleColumns, setVisibleColumns] = useState({
 		id: true,
-		fornecedor: true,
-		descricao: true,
-		filial: true,
-		dateEntrega: true,
-		status: true,
+		provider: true,
+		description: true,
+		branch: true,
+		date: true,
+		status: true
 	});
 
-	const data = [
-		{
-			"id": "1",
-			"fornecedor": "Fornecedor 1",
-			"descricao": "Descricao 1",
-			"filial": "Filial 1",
-			"dateEntrega": "2023-01-01",
-			"status": "Ativo"
-		},
-		{
-			"id": "2",
-			"fornecedor": "Fornecedor 2",
-			"descricao": "Descricao 2",
-			"filial": "Filial 2",
-			"dateEntrega": "2023-02-01",
-			"status": "Inativo"
-		},
-		{
-			"id": "3",
-			"fornecedor": "Fornecedor 3",
-			"descricao": "Descricao 3",
-			"filial": "Filial 3",
-			"dateEntrega": "2023-03-01",
-			"status": "Ativo"
-		},
-		{
-			"id": "4",
-			"fornecedor": "Fornecedor 3",
-			"descricao": "Descricao 3",
-			"filial": "Filial 3",
-			"dateEntrega": "2023-03-01",
-			"status": "Ativo"
-		},
-		{
-			"id": "5",
-			"fornecedor": "Fornecedor 3",
-			"descricao": "Descricao 3",
-			"filial": "Filial 3",
-			"dateEntrega": "2023-03-01",
-			"status": "Ativo"
-		},
-		{
-			"id": "6",
-			"fornecedor": "Fornecedor 3",
-			"descricao": "Descricao 3",
-			"filial": "Filial 3",
-			"dateEntrega": "2023-03-01",
-			"status": "Ativo"
-		},
-		{
-			"id": "7",
-			"fornecedor": "Fornecedor 3",
-			"descricao": "Descricao 3",
-			"filial": "Filial 3",
-			"dateEntrega": "2023-03-01",
-			"status": "Ativo"
-		},
-		{
-			"id": "8",
-			"fornecedor": "Fornecedor 3",
-			"descricao": "Descricao 3",
-			"filial": "Filial 3",
-			"dateEntrega": "2023-03-01",
-			"status": "Ativo"
-		},
-		{
-			"id": "9",
-			"fornecedor": "Fornecedor 3",
-			"descricao": "Descricao 3",
-			"filial": "Filial 3",
-			"dateEntrega": "2023-03-01",
-			"status": "Ativo"
-		},
-		{
-			"id": "10",
-			"fornecedor": "Fornecedor 3",
-			"descricao": "Descricao 3",
-			"filial": "Filial 3",
-			"dateEntrega": "2023-03-01",
-			"status": "Ativo"
-		},
-		{
-			"id": "11",
-			"fornecedor": "Fornecedor 3",
-			"descricao": "Descricao 3",
-			"filial": "Filial 3",
-			"dateEntrega": "2023-03-01",
-			"status": "Ativo"
-		},
-	];
-	const items = [
-		{
-			label: 'Paraná Centro',
-			id: '1',
-		},
-		{
-			label: 'Paraná Larpão',
-			id: '1',
-		},
-	];
+	useEffect(() => {
+		const token = user.token;
+	
+		axios.get('http://localhost:3000/schedules', {
+		  headers: {
+			'Authorization': `Bearer ${token}`
+		  }
+		})
+		.then(response => {     
+			setOriginalFiliais(response.data);
+			setFiliais(response.data);
+		})
+		.catch(error => {
+		  console.error('Erro ao buscar os dados do perfil:', error);
+		});
+	}, [user.token]);
 
-	const situacoes = [
-		{
-			label: 'Ag. Aprovação',
-			id: '1',
-		},
-		{
-			label: 'Ag. Entrega',
-			id: '2',
-		},
-		{
-			label: 'Entregue',
-			id: '3',
-		},
-		{
-			label: 'Cancelada',
-			id: '4',
-		},
-	]
+	function getStatusKey(label) {
+		const statusObj = STATUS.find(status => status.label === label);
+		return statusObj ? statusObj.key : null;
+	}
+	
+	const onSubmit = (values) => {
+		const { fornecedor, cnpj, statusLabel } = values;
+
+		const status = getStatusKey(statusLabel);
+	
+		const filteredFiliais = originalFiliais.filter(filial => {
+			const matchesFornecedor = !fornecedor || filial.provider.includes(fornecedor);
+			const matchesCnpj = !cnpj || filial.cnpj === cnpj;
+			const matchesStatus = !status || filial.status === status;
+	
+			return matchesFornecedor && matchesCnpj && matchesStatus;
+		});
+	
+		setFiliais(filteredFiliais);
+	};
+	
+	const onReset = () => {
+		form.resetFields();
+		setFiliais(originalFiliais);
+	};
+
+	const getStatusLabel = (key) => {
+		const statusObj = STATUS.find((status) => status.key === key);
+		return statusObj ? statusObj.label : key;
+	};
 
 	const columns = [
 		{
@@ -155,39 +110,45 @@ const Encomendas = () => {
 		},
 		{
 			title: 'Fornecedor',
-			dataIndex: 'fornecedor',
-			key: 'fornecedor',
-			sorter: (a, b) => a.fornecedor.localeCompare(b.fornecedor),
+			dataIndex: 'provider',
+			key: 'provider',
+			sorter: (a, b) => a.provider.localeCompare(b.provider),
 		},
 		{
 			title: 'Descrição',
-			dataIndex: 'descricao',
-			key: 'descricao',
-			sorter: (a, b) => a.descricao.localeCompare(b.descricao),
+			dataIndex: 'description',
+			key: 'description',
+			sorter: (a, b) => a.description.localeCompare(b.description),
 		},
 		{
 			title: 'Filial',
-			dataIndex: 'filial',
-			key: 'filial',
-			sorter: (a, b) => a.filial.localeCompare(b.filial),
+			dataIndex: 'branch',
+			key: 'branch',
+			sorter: (a, b) => a.branch.localeCompare(b.branch),
 		},
 		{
 			title: 'Data de entrega',
-			dataIndex: 'dateEntrega',
-			key: 'dateEntrega',
-			sorter: (a, b) => a.dateEntrega.localeCompare(b.dateEntrega),
+			dataIndex: 'date',
+			key: 'date',
+			render: (text, record) => (
+				<div>{moment(record.date).format('DD-MM-YYYY')}</div>
+			),
+			sorter: (a, b) => a.date.localeCompare(b.date),
 		},
 		{
 			title: 'Situação',
 			dataIndex: 'status',
 			key: 'status',
+			render: (text, record) => (
+				<div>{getStatusLabel(record.status)}</div>
+			),
 			onFilter: (value, record) => record.status.indexOf(value) === 0,
 		},
 		{
 		title: 'Ações',
 		render: (record) => (
-			<Link to={`/edit-fornecedores/${record.id}`}>
-			<EditOutlined style={{ cursor: 'pointer' }} />
+			<Link to={`/editar-encomenda/${record.id}`}>
+				<EditOutlined style={{ cursor: 'pointer' }} />
 			</Link>
 		)
 		},     
@@ -196,6 +157,7 @@ const Encomendas = () => {
 	const onChange = (pagination, filters, sorter, extra) => {
 		return ('params', pagination, filters, sorter, extra);
 	};
+	
 
 	const handleVisibleChange = columnid => {
 		setVisibleColumns({
@@ -229,7 +191,27 @@ const Encomendas = () => {
 			})}
 		</Menu>
 	);
-	  
+
+  const MaskedInput = ({ mask, ...props }) => {
+    const inputRef = React.useRef();
+  
+    React.useEffect(() => {
+      if (inputRef.current) {
+        const maskOptions = {
+          mask: mask,
+        };
+        const imaskInstance = IMask(inputRef.current.input, maskOptions);
+        return () => imaskInstance.destroy();
+      }
+    }, [mask]);
+  
+    return <Input style={{ border: '1px solid #8D8D8D', color: '#8D8D8D'}} size='large' ref={inputRef} {...props} />;
+  };
+
+  const onSearch = () => {
+	form.submit();
+};
+
 
 	return (
 		<Content className={Styles.content}>
@@ -240,29 +222,32 @@ const Encomendas = () => {
 						<p style={{fontSize: 20}}>Filtros:</p>
 					</Col>
 				</Row>
-				<Row gutter={[16, 16]}>
-					<Col xs={28} sm={28} md={28} lg={28}>
-						<BotaoInput placeholder={"Fornecedor"}/>
-					</Col>
-					<Col xs={28} sm={28} md={28} lg={28}>
-						<DropdownButton
-							placeholder="Busque pela filial"
-							items={items}
-						/>
-					</Col>
-					<Col xs={28} sm={28} md={28} lg={28}>
-						<DropdownButton
-							placeholder="Situação"
-							items={situacoes}
-						/>
-					</Col>
-					<Col xs={28} sm={28} md={28} lg={28}>
-						<Datepicker />
-					</Col>
-					<Col xs={28} sm={28} md={28} lg={28}>
-						<BotaoBuscar />
-					</Col>
-				</Row>
+				<Form form={form} onFinish={onSubmit}>
+					<Row gutter={[16, 16]}>
+						<Col xs={28} sm={28} md={28} lg={28}>
+							<Form.Item name="fornecedor">
+								<BotaoInput placeholder={"Fornecedor"}/>
+							</Form.Item>
+						</Col>
+						<Col xs={28} sm={28} md={28} lg={28}>
+							<Form.Item name="cnpj">
+								<MaskedInput mask="00.000.000/0000-00" placeholder="CNPJ" />
+							</Form.Item>
+						</Col>
+						<Col xs={28} sm={28} md={28} lg={28}>
+							<Form.Item name="statusLabel">
+								<DropdownButton
+									placeholder="Situação"
+									items={STATUS}
+									value={STATUS.key}
+								/>
+							</Form.Item>
+						</Col>
+						<Col xs={28} sm={28} md={28} lg={28}>
+							<BotaoBuscar onSearch={onSearch} onReset={onReset} />
+						</Col>
+					</Row>
+				</Form>
 			</div>
 			<Row gutter={[16, 16]} className={Styles.contentTopButtons}>
 				<Col xs={28} sm={28} md={28} lg={28}>
@@ -281,22 +266,25 @@ const Encomendas = () => {
 					</Dropdown>
 				</Col>
 				<Col xs={28} sm={28} md={28} lg={28}>
-					<Button
-						icon={<PlusOutlined />}
-						className={Styles.add}
-						onMouseOver={(e) => {
-							e.target.style.backgroundColor = '#001C36';
-							e.target.style.color = 'white';
-							e.target.style.borderColor = 'white';
-						}}
-					>
-						Adicionar
-					</Button>
+					<Link to={`/cadastro-encomenda`}>
+						<Button
+							icon={<PlusOutlined />}
+							className={Styles.add}
+							onMouseOver={(e) => {
+								e.target.style.backgroundColor = '#001C36';
+								e.target.style.color = 'white';
+								e.target.style.borderColor = 'white';
+							}}
+						>
+							Adicionar
+						</Button>
+
+					</Link>
 				</Col>
 			</Row>
 			<Table
 				columns={columns}
-				dataSource={data}
+				dataSource={filiais}
 				onChange={onChange}
 			/>
 		</Content>

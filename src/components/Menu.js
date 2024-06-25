@@ -1,10 +1,10 @@
 import { Menu as MenuAntd } from 'antd';
 
-const Menu = ({ items }) => (
+const Menu = ({ items, value }) => (
     <MenuAntd
         theme="dark"
         mode="inline"
-        defaultSelectedKeys={['1']}
+        defaultSelectedKeys={[value]}
         items={items}
     />
 );

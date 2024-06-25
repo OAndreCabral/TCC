@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Styles from './Filiais.module.css';
 
 import { Link } from 'react-router-dom';
@@ -7,93 +7,47 @@ import {
 	SignalFilled,
 	PlusOutlined,
 } from '@ant-design/icons';
-import { Input, Button, Layout, Table, Row, Col, Dropdown, Menu, Checkbox } from 'antd';
+import { Input, Button, Layout, Table, Row, Col, Dropdown, Menu, Checkbox, Form } from 'antd';
 import BotaoInput from '../../../../components/BotaoInput';
 import BotaoBuscar from '../../../../components/BotaoBuscar';
 import DropdownButton from '../../../../components/DropdownButton';
 import IMask from 'imask';
+import { UserContext } from '../../../../components/MainLayout';
+import axios from 'axios';
 
 const { Content } = Layout;
 
 const Filiais = () => {
+	const { user } = useContext(UserContext);
+	const [form] = Form.useForm();
 	const [dropdownVisible, setDropdownVisible] = useState(false);
+	const [filiais, setFiliais] = useState([]);
+	const [originalFiliais, setOriginalFiliais] = useState([]);
 	const [visibleColumns, setVisibleColumns] = useState({
 		id: true,
-		nomeFantasia: true,
+		fantasy_name: true,
 		cnpj: true,
 		status: true,
 	});
 
-	const data = [
-		{
-			"id": "1",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "2",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "3",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "4",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "5",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "6",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "7",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "8",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "9",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "10",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-    {
-			"id": "11",
-			"nomeFantasia": "Fornecedor 1",
-			"cnpj": "72.587.873/0001-53",
-			"status": "ativo",
-		},
-	];
+	useEffect(() => {
+		const token = user.token;
+	
+		axios.get('http://localhost:3000/users/list-branch', {
+		  headers: {
+			'Authorization': `Bearer ${token}`
+		  }
+		})
+		.then(response => {     
+			setOriginalFiliais(response.data);
+			setFiliais(response.data);
+		})
+		.catch(error => {
+		  console.error('Erro ao buscar os dados do perfil:', error);
+		});
+	}, [user.token]);
 
-  const situacoes = [
+	const situacoes = [
 		{
 			label: 'Ativo',
 			id: '1',
@@ -104,6 +58,33 @@ const Filiais = () => {
 		},
 	]
 
+	function getStatusKey(label) {
+		const statusObj = situacoes.find(status => status.label === label);
+		return statusObj ? statusObj.key : null;
+	}
+
+	const onSubmit = (values) => {
+		const { fornecedor, cnpj, statusLabel } = values;
+
+		const status = getStatusKey(statusLabel);
+		
+		const filteredFiliais = originalFiliais.filter(filial => {
+			const matchesFornecedor = !fornecedor || filial.fantasy_name.includes(fornecedor);
+			const matchesCnpj = !cnpj || filial.cnpj === cnpj;
+			const matchesStatus = !status || filial.status === status;
+	
+			return matchesFornecedor && matchesCnpj && matchesStatus;
+		});
+	
+		setFiliais(filteredFiliais);
+	};
+
+	const onReset = () => {
+		form.resetFields();
+		setFiliais(originalFiliais);
+	};
+
+
 	const columns = [
 		{
 			title: 'ID',
@@ -113,9 +94,10 @@ const Filiais = () => {
 		},
 		{
 			title: 'Nome fantasia',
-			dataIndex: 'nomeFantasia',
-			key: 'nomeFantasia',
-			sorter: (a, b) => a.nomeFantasia.localeCompare(b.nomeFantasia),
+			dataIndex: 'fantasy_name',
+			key: 'fantasy_name',
+			with: '100%',
+			sorter: (a, b) => a.fantasy_name.localeCompare(b.fantasy_name),
 		},
 		{
 			title: 'CNPJ',
@@ -132,7 +114,7 @@ const Filiais = () => {
 		{
 		title: 'Ações',
 		render: (record) => (
-			<Link to={`/edit-fornecedores/${record.id}`}>
+			<Link to={`/editar-filial/${record.id}`}>
 				<EditOutlined style={{ cursor: 'pointer' }} />
 			</Link>
 		)
@@ -192,6 +174,10 @@ const Filiais = () => {
     return <Input style={{ border: '1px solid #8D8D8D', color: '#8D8D8D'}} size='large' ref={inputRef} {...props} />;
   };
 
+  const onSearch = () => {
+	form.submit();
+};
+
 	return (
 		<Content className={Styles.content}>
 			<h1>Filiais</h1>
@@ -201,23 +187,33 @@ const Filiais = () => {
 						<p style={{fontSize: 20}}>Filtros:</p>
 					</Col>
 				</Row>
-				<Row gutter={[16, 16]}>
-					<Col xs={28} sm={28} md={28} lg={28}>
-						<BotaoInput placeholder={"Fornecedor"}/>
-					</Col>
-          <Col xs={28} sm={28} md={28} lg={28}>
-            <MaskedInput mask="00.000.000/0000-00" placeholder="CNPJ" />
-          </Col>
-          <Col xs={28} sm={28} md={28} lg={28}>
-						<DropdownButton
-							placeholder="Situação"
-							items={situacoes}
-						/>
-					</Col>
-					<Col xs={28} sm={28} md={28} lg={28}>
-						<BotaoBuscar />
-					</Col>
-				</Row>
+				<Form form={form} onFinish={onSubmit}>
+					<Row gutter={[16, 16]}>
+						<Col xs={28} sm={28} md={28} lg={28}>
+							<Form.Item name="fornecedor">
+								<BotaoInput placeholder={"Fornecedor"}/>
+							</Form.Item>
+						</Col>
+						<Col xs={28} sm={28} md={28} lg={28}>
+							<Form.Item name="cnpj">
+								<MaskedInput mask="00.000.000/0000-00" placeholder="CNPJ" />
+							</Form.Item>
+						</Col>
+						<Col xs={28} sm={28} md={28} lg={28}>
+							<Form.Item name="statusLabel">
+								<DropdownButton
+									placeholder="Situação"
+									items={situacoes}
+								/>
+							</Form.Item>
+						</Col>
+						<Col xs={28} sm={28} md={28} lg={28}>
+							<Form.Item>
+								<BotaoBuscar onSearch={onSearch} onReset={onReset} />
+							</Form.Item>
+						</Col>
+					</Row>
+				</Form>
 			</div>
 			<Row gutter={[16, 16]} className={Styles.contentTopButtons}>
 				<Col xs={28} sm={28} md={28} lg={28}>
@@ -254,7 +250,7 @@ const Filiais = () => {
 			</Row>
 			<Table
 				columns={columns}
-				dataSource={data}
+				dataSource={filiais}
 				onChange={onChange}
 			/>
 		</Content>
